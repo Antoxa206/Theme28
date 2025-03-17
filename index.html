@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема і форма збереження</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark-theme {
+            background: #222;
+            color: #fff;
+        }
+
+        .dark-theme .container {
+            background: #333;
+            border-color: #666;
+        }
+
+        .dark-theme button {
+            background: #555;
+            color: #fff;
+        }
+        input {
+            width: 100px;
+            padding: 8px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="toggleTheme">Переключити тему</button>
+
+    <div class="container">
+        <h2>Форма користувача</h2>
+        <label for="name">Ім'я:</label>
+        <input type="text" id="name" placeholder="Введіть ім'я">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Введіть email">
+        
+        <button id="saveData">Зберегти</button>
+        <button id="clearData">Очистити</button>
+    </div>
+
+    <script>
+       
+        const toggleThemeBtn = document.getElementById('toggleTheme');
+
+       
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+      
+        toggleThemeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+     
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const saveDataBtn = document.getElementById('saveData');
+        const clearDataBtn = document.getElementById('clearData');
+
+        nameInput.value = sessionStorage.getItem('name') || '';
+        emailInput.value = sessionStorage.getItem('email') || '';
+
+        saveDataBtn.addEventListener('click', () => {
+            sessionStorage.setItem('name', nameInput.value);
+            sessionStorage.setItem('email', emailInput.value);
+            alert('Дані збережено у сесії!');
+        });
+
+        clearDataBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('email');
+            nameInput.value = '';
+            emailInput.value = '';
+            alert('Дані очищено!');
+        });
+    </script>
+
+</body>
+</html>
